@@ -32,7 +32,7 @@ class StoreTrip extends FormRequest
             'time'                  => 'bail|required|date_format:H:i',
             'notes'                 => 'bail|nullable|string',
             'going_type'            => 'bail|required|in:going,going_and_comingback,going_and_comingback_otherday',
-            'other_day'             => 'bail|nullable|date',
+            'other_date'            => 'bail|nullable|date',
             'other_time'            => 'bail|nullable|date_format:H:i',
             'promo_code'            => 'bail|nullable|string|max:20'
         ];

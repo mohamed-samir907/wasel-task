@@ -31,7 +31,11 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" 
+            @if(isset($navbar))
+                style=" background-color: transparent; box-shadow: none;"
+            @endif
+            >
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -80,7 +84,11 @@
                         
                     </ul>
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="https://www.waselegypt.com/images/logo-orange.png" style="max-width: 87px">
+                        @if(isset($navbar))
+                            <img src="https://www.waselegypt.com/images/logo.png" style="max-width: 87px">
+                        @else
+                            <img src="https://www.waselegypt.com/images/logo-orange.png" style="max-width: 87px">
+                        @endif
                     </a>
                 </div>
             </div>

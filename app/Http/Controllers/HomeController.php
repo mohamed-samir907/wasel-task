@@ -30,6 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $navbar = '';
+        return view('home', compact('navbar'));
     }
 }

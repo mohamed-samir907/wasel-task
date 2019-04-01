@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Trip;
 use App\Price;
+use App\Promo;
 use App\MyHelper;
 use App\Http\Requests\StoreTrip;
 use App\Http\Requests\ValidatePrice;
+use App\Http\Requests\ValidatePromo;
 
 use Illuminate\Http\Request;
 
@@ -18,14 +20,19 @@ class TripsController extends Controller
      * @param  \App\Http\Requests\StoreTrip  $request
      * @return \Illuminate\Http\Response
      */
-    public function add_trip(Request $request)
+    public function add_trip(StoreTrip $request)
     {
+        if (!Auth::check()) {
+            session()->flash('error', 'You must login to book a trip');
+            return back();
+        }
+
         list($place_from_address, $place_to_address) 
             = MyHelper::sanitizeString($request->place_from_address, $request->place_to_address);
 
         if ($request->going_type == 'going_and_comingback_otherday') {
             $this->validate($request, [
-                'other_day'     => 'bail|required|date',
+                'other_date'    => 'bail|required|date',
                 'other_time'    => 'bail|required|date_format:H:i',
             ]);
         }
@@ -54,16 +61,10 @@ class TripsController extends Controller
      * Get the price of the trip
      * 
      * @param  \App\Http\Requests\ValidatePrice $request
-     * @return int
+     * @return object
      */
     public function get_price(ValidatePrice $request)
     {
-        /*if ($request->promo_code != null) {
-            $this->validate($request, [
-                'promo_code'    => 'bail|required|string|max:20'
-            ]);
-        }*/
-
         $price = Price::where('from_id', $request->place_from)
                         ->where('to_id', $request->place_to)
                         ->where('going', $request->going_type)
@@ -79,5 +80,44 @@ class TripsController extends Controller
         ]);
     }
 
-    
+    /**
+     * Check the promo code 
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @return bool|object
+     */
+    public function promo(ValidatePromo $request)
+    {
+        $promo = Promo::where('code', $request->promo_code)
+                        ->where('from_id', $request->place_from)
+                        ->where('to_id', $request->place_to)
+                        ->where('going', $request->going_type)
+                        ->first();
+
+        if ($promo) 
+        {
+            if ($promo->count_used < $promo->count) {
+                $promo->count_used++;
+                $promo->save();
+                $price = (session()->get('price') - $promo->discount);
+                session()->put('promo', $promo->discount);
+                session()->put('price', $price);
+
+                return response([
+                    'message'   => 'success',
+                    'data'      => $price
+                ]);
+            } else {
+                return response([
+                    'message'   => 'expired',
+                    'data'      => null
+                ]);
+            }
+        }
+
+        return response([
+            'message'   => 'code_not_found',
+            'data'      => null
+        ]);
+    }
 }
