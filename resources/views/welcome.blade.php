@@ -162,6 +162,12 @@
         var place_to    = $('#place_to').val();
         var going       = $('input[name=going_type]:checked').val();
 
+        if (going == 'going_and_comingback_otherday') {
+            $('#div_other').css('display', 'block');
+        } else {
+            $('#div_other').css('display', 'none');
+        }
+
         updatePrice(place_from, place_to, going);
     });
 
