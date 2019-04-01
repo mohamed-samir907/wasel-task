@@ -1,0 +1,96 @@
+body {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+}
+/*Navbar*/
+.navbar {
+  min-height: 60px;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+  height: 60px;
+  line-height: 60px;
+}
+
+.navbar-toggle {
+  margin-top: 19px;
+  padding: 5px 6px !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    padding-top: 20.5px;
+    padding-bottom: 20.5px;
+    line-height: 20px;
+  }
+}
+.item-font a {
+    font-size: 16px !important;
+}
+.item-font-bold a {
+    font-size: 16px !important;
+    font-weight: bold;
+}
+/*navbar*/
+
+.btnContactSubmit
+{
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    color: #fff;
+    background-color: #0062cc;
+    border: none;
+    cursor: pointer;
+    margin-right: 6%;
+    background-color: white;
+    color: blue;
+    margin-top: 4%;
+}
+
+.btnLoginSubmit{
+    border: none;
+    padding: 2%;
+    width: 25%;
+    cursor: pointer;
+    background: #29abe2;
+    color: #fff;
+}
+
+.btnForgetPwd{
+    cursor: pointer;
+    margin-right: 5%;
+    color: #f8f9fa;
+}
+
+.heading {
+    color: #FFF;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.form {
+    max-width: 700px;
+    margin: 0 autho;
+}
+
+.form-control {
+    min-height: 45px !important;
+    font-size: 17px;
+}
+
+.text-white {
+    color: #FFF;
+}
+label {
+    font-size: 16px;
+}
+
+.price {
+    background: #62e462;
+    padding: 10px;
+    width: 120px;
+    color: #FFF;
+    font-weight: bold;
+    border-radius: 5px;
+}
